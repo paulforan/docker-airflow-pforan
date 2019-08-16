@@ -1,4 +1,4 @@
-# docker-airflow
+# docker-airflow-pforan
 [![CircleCI](https://circleci.com/gh/pforan/docker-airflow-pforan/tree/master.svg?style=svg)](https://circleci.com/gh/paulforan/docker-airflow-pforan/tree/master)
 [![Docker Build Status](https://img.shields.io/docker/build/pforan/docker-airflow-pforan.svg)]()
 
@@ -6,7 +6,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/paulforan/docker-airflow-pforan.svg)]()
 [![Docker Stars](https://img.shields.io/docker/stars/paulforan/docker-airflow-pforan.svg)]()
 
-This repository contains **Dockerfile** of [apache-airflow](https://github.com/apache/incubator-airflow) for [Docker](https://www.docker.com/)'s [automated build](https://registry.hub.docker.com/u/pforan/docker-airflow-pforan/) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
+This  repository contains **Dockerfile** of [apache-airflow](https://github.com/apache/incubator-airflow) for [Docker](https://www.docker.com/)'s [automated build](https://registry.hub.docker.com/u/pforan/docker-airflow-pforan/) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
 
 ## Information
 
