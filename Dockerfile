@@ -62,7 +62,7 @@ RUN set -ex \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
     && pip install boto3 \
-    && pip install apache-airflow[crypto,celery,postgres,hive,kubernetes,jdbc,mysql,oracle,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
+    && pip install apache-airflow[crypto,celery,postgres,hive,kubernetes,jdbc,mysql,mssql,oracle,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
     && pip install 'redis==3.2.1' \
     && pip install cx-Oracle==7.2.1 \
     && if [ -n "${PYTHON_DEPS}" ]; then pip install ${PYTHON_DEPS}; fi \
@@ -78,7 +78,7 @@ RUN set -ex \
         /usr/share/doc-base
     
 
-# Install Oracle Instantclient
+# Install Oracle Instant Client
 RUN mkdir /opt/oracle \
     && cd /opt/oracle \
     && wget https://github.com/epoweripione/oracle-instantclient-18/raw/master/instantclient-basic-linux.x64-19.3.0.0.0dbru.zip \
@@ -91,7 +91,21 @@ RUN mkdir /opt/oracle \
     && rm -rf /opt/oracle/*.zip
 RUN apt-get update \
     && apt-get install libaio1
-ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_19_3 
+ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_19_3
+
+# Install Sql Server Client
+# https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools?view=sql-server-2017
+RUN apt-get install --reinstall build-essential -y
+RUN apt-get update
+RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
+  && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list 
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
+RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN pip install pyodbc
+RUN pip install pymssql
     
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
