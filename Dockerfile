@@ -62,6 +62,7 @@ RUN set -ex \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
     && pip install boto3 \
+    && pip install smart-open==1.8.4 \
     && pip install apache-airflow[crypto,celery,postgres,hive,kubernetes,jdbc,mysql,mssql,oracle,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
     && pip install 'redis==3.2.1' \
     && pip install cx-Oracle==7.2.1 \
